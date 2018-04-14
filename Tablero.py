@@ -4,7 +4,7 @@ class Tablero:
         self.numFilas = 6
         self.numColumnas = 7
         self.vacio = True
-        self.matriz = [[0] * self.numColumnas] * self.numFilas
+        self.matriz = [[0] * self.numColumnas for i in range (self.numFilas)]
         self.casillaVacia = "."
 
 
@@ -45,12 +45,26 @@ class Tablero:
             print
         print
 
-    def ponerFicha(self, columna):
-        self.matriz[5][columna - 1] = 1
+    def mostrarse (self):
+        for i in range(self.numFilas):
+            print self.matriz[i]
 
+    def ponerFicha(self, columna, ficha):
+        for i in reversed (range(self.numFilas)):
+            if self.matriz[i][columna - 1] == 0:
+                self.matriz[i][columna - 1] = ficha
+                break
 
 t1 = Tablero()
 t1.pintarse()
-t1.ponerFicha(4)
-t1.ponerFicha(2)
+t1.ponerFicha(4, 1)
 t1.pintarse()
+t1.ponerFicha(2, 1)
+t1.pintarse()
+t1.ponerFicha(2, 2)
+t1.pintarse()
+t1.ponerFicha(3, 2)
+t1.pintarse()
+t1.ponerFicha(2, 2)
+t1.pintarse()
+t1.mostrarse()
