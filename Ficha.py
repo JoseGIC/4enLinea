@@ -9,8 +9,14 @@ class Ficha:
     def setColor(self, color):
         self.color = color
 
+    def getNumero(self):
+        if self.color == "rojo":
+            return 1
+        elif self.color == "amarillo":
+            return 2
+
     def pintarse(self):
         if self.color == "rojo":
             return "x"
-        else:
+        elif self.color == "amarillo":
             return "o"

@@ -41,6 +41,37 @@ class Tablero:
             columna.append(self.matriz[i][numColumna - 1])
         return columna
 
+    def getDiagonalCreciente(self, numFila, numColumna):
+        diagonal = []
+        filaActual = numFila - 1
+        columnaActual = numColumna - 1
+
+        while filaActual != self.numFilas - 1 and columnaActual != 0:
+            filaActual += 1
+            columnaActual -= 1
+
+        while filaActual >= 0 and columnaActual < self.numColumnas:
+            diagonal.append(self.matriz[filaActual][columnaActual])
+            filaActual -= 1
+            columnaActual += 1
+
+        return diagonal
+
+    def getDiagonalDecreciente(self, numFila, numColumna):
+        diagonal = []
+        filaActual = numFila - 1
+        columnaActual = numColumna - 1
+
+        while filaActual != 0 and columnaActual != 0:
+            filaActual -= 1
+            columnaActual -= 1
+
+        while filaActual < self.numFilas and columnaActual < self.numColumnas:
+            diagonal.append(self.matriz[filaActual][columnaActual])
+            filaActual += 1
+            columnaActual += 1
+
+        return diagonal
 
     def pintarse(self):
         for i in range(self.numFilas):
@@ -58,26 +89,24 @@ class Tablero:
         for i in range(self.numFilas):
             print self.matriz[i]
 
-
     def ponerFicha(self, numColumna, ficha):
         for i in reversed(range(self.numFilas)):
             if self.matriz[i][numColumna - 1] == 0:
                 self.matriz[i][numColumna - 1] = ficha
                 self.pintarse()
-                self.comprobarLineas(i + 1, numColumna, ficha)
-                break
+                return self.comprobarLineas(i + 1, numColumna, ficha)
+        return False
 
     def comprobarLineas(self, numFila, numColumna, ficha):
         fila = self.getFila(numFila)
         columna = self.getColumna(numColumna)
-        #diagonalDcha = ...
-        #diagonaIzda = ...
-        linea = self.lineaHecha(fila, ficha) or \
-                self.lineaHecha(columna, ficha) #or \
-                #self.lineaHecha(diagonalDcha, ficha) or \
-                #self.lineaHecha(diagonaIzda, ficha)
-        if linea:
-            print "VICTORIA!"
+        diagonalDcha = self.getDiagonalCreciente(numFila, numColumna)
+        diagonaIzda = self.getDiagonalDecreciente(numFila, numColumna)
+
+        return self.lineaHecha(fila, ficha) or \
+                self.lineaHecha(columna, ficha) or \
+                self.lineaHecha(diagonalDcha, ficha) or \
+                self.lineaHecha(diagonaIzda, ficha)
 
     def lineaHecha(self, linea, ficha):
         total = 0
@@ -89,19 +118,3 @@ class Tablero:
             else:
                 total = 0
         return False
-
-    def diagonalHecha(self, fila, columna, ficha):
-        pass
-
-
-t1 = Tablero()
-t1.ponerFicha(4, 1)
-t1.ponerFicha(2, 1)
-t1.ponerFicha(2, 2)
-t1.ponerFicha(3, 2)
-t1.ponerFicha(2, 2)
-t1.ponerFicha(5, 1)
-t1.ponerFicha(6, 1)
-#t1.ponerFicha(7, 1)
-t1.ponerFicha(2, 2)
-t1.ponerFicha(2, 2)
