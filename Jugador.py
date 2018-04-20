@@ -3,11 +3,12 @@ import Ficha
 
 class Jugador:
 
-    def __init__(self, nombre, color):
+    def __init__(self, nombre, numFichas, color):
         self.nombre = nombre
-        self.numFichas = 21
-        self.puntos = 0
+        self.numFichas = numFichas
+        self.puntos = 210
         self.ficha = Ficha.Ficha(color)
+        self.listaFichas = []
 
     def getNombre(self):
         return self.nombre
@@ -32,3 +33,12 @@ class Jugador:
 
     def setFicha(self, ficha):
         self.ficha = ficha
+
+    def crearFichas(self):
+        for i in range(0, self.numFichas):
+            self.listaFichas.append(Ficha.Ficha(self.ficha.getColor()))
+
+    def sacarFicha(self):
+        if len(self.listaFichas) > 0:
+            self.puntos -= 10
+            return self.listaFichas.pop()
